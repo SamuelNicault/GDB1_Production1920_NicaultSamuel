@@ -7,32 +7,42 @@ class Scene1 extends Phaser.Scene {
   init(){
     this.quete;
     this.press;
+    this.niveau = 1;
   }
 
  preload() {
           this.load.image("timebar", "assets/timer.png");
           this.load.image("coureur", "assets/coureur.png");
-          this.load.image("debut", "assets/debut.png");
-          this.load.image("fin", "assets/fin.png");
+          this.load.image("entier", "assets/c_entier1.png");
           this.load.image("base", "assets/base.png");
+          this.load.image("bouton", "assets/c_bouton.png");
+          this.load.image("bandeau_o", "assets/c_bandeau_o.png");
+          this.load.image("bandeau_f", "assets/c_bandeau_f.png");
     }
 
     create() {
+            this.diff = 50 * this.niveau;
           
 
             this.add.image(0,0,'base').setOrigin(0,0);
             //this.add.image(0,0,'debut').setOrigin(0,0);
-            //this.add.image(0,0,'fin').setOrigin(0,0);
+            this.add.image(0,0,'entier').setOrigin(0,0);
+            this.bandeau_f = this.add.image((672 + this.diff),198,'bandeau_f').setOrigin(0,0);
+            this.bandeau_o = this.add.image((672 + this.diff),198,'bandeau_o').setOrigin(0,0).setAlpha(0);
+
             
                         
-            this.coureur = this.add.image(30,150,'coureur').setOrigin(0,0);
-            this.zoneTap = this.add.image(80,300,'').setInteractive();
-            
+            this.coureur = this.add.image(500,150,'coureur').setOrigin(0,0);
+            this.zoneTap = this.add.image(80,315,'bouton').setInteractive().setScrollFactor(0, 0);
 
+            this.cameras.main.startFollow(this.coureur);
+            this.cameras.main.setBounds(0, 0, 1456, 600);
+            
             this.zoneTap.on('pointerdown',() => {
-              thi.coureur.x += 10;
-              0console.log("hello");
+              this.coureur.x += 20;
+              console.log("hello");
             })
+            
 
             
 
@@ -67,6 +77,7 @@ class Scene1 extends Phaser.Scene {
                     let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
                     this.energyMask.x -= stepWidth;
                     if(this.timeLeft == 0){
+                        console.log("looser");
                         //this.scene.start("PlayGame");
                     }
                 },
@@ -75,7 +86,11 @@ class Scene1 extends Phaser.Scene {
             });
     }
   update() {
-      //this.gameTimer.paused = true;
+    if (this.coureur.x >= (653 + this.diff)){
+      this.zoneTap.destroy(true,true);
+      this.bandeau_o.setAlpha(1);
+      this.gameTimer.paused = true;
+    }
     
 
   }
