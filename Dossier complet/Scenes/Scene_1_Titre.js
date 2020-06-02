@@ -11,10 +11,31 @@ class Scene1 extends Phaser.Scene {
 
  preload() {
           this.load.image("timebar", "assets/timer.png");
-          this.load.image("timebar", "assets/timer.png");
+          this.load.image("coureur", "assets/coureur.png");
+          this.load.image("debut", "assets/debut.png");
+          this.load.image("fin", "assets/fin.png");
+          this.load.image("base", "assets/base.png");
     }
 
     create() {
+          
+
+            this.add.image(0,0,'base').setOrigin(0,0);
+            //this.add.image(0,0,'debut').setOrigin(0,0);
+            //this.add.image(0,0,'fin').setOrigin(0,0);
+            
+                        
+            this.coureur = this.add.image(30,150,'coureur').setOrigin(0,0);
+            this.zoneTap = this.add.image(80,300,'').setInteractive();
+            
+
+            this.zoneTap.on('pointerdown',() => {
+              thi.coureur.x += 10;
+              0console.log("hello");
+            })
+
+            
+
         //Timer
             let gameOptions = { initialTime: 600 }
             this.timeLeft = gameOptions.initialTime;
@@ -54,7 +75,7 @@ class Scene1 extends Phaser.Scene {
             });
     }
   update() {
-
+      //this.gameTimer.paused = true;
     
 
   }
