@@ -5,46 +5,110 @@ class Scene2 extends Phaser.Scene {
 
 
   init(){
+    this.camera3 = this.cameras.add(0, 0, 748, 376);
+    this.camera2 = this.cameras.add(0, 0, 748, 376);
+    this.camera1 = this.cameras.add(285, 100, 177, 177);
+
     this.quete;
     this.press;
-    this.niveau = 5;
+    this.niveau = 1;
   }
 
  preload() {
           this.load.image("timebar", "assets/timer.png");
-          this.load.image("coureur", "assets/coureur.png");
-          this.load.image("entier", "assets/c_entier1.png");
-          this.load.image("base", "assets/base.png");
-          this.load.image("bouton", "assets/c_bouton.png");
-          this.load.image("bandeau_o", "assets/c_bandeau_o.png");
-          this.load.image("bandeau_f", "assets/c_bandeau_f.png");
+          this.load.image("viseur", "assets/t_viseur.png");
+          this.load.image("centre", "assets/t_centre_viseur.png");
+          this.load.image("entier", "assets/fin.png");
+          this.load.image("bouton", "assets/t_bouton.png");
+          this.load.image("fleches", "assets/t_fleches.png");
+          this.load.image("flecheH", "assets/t_fleche_h.png");
+          this.load.image("flecheB", "assets/t_fleche_b.png");
+          this.load.image("flecheG", "assets/t_fleche_g.png");
+          this.load.image("flecheD", "assets/t_fleche_d.png");
     }
 
     create() {
-            this.diff = 100 * this.niveau;
+            this.diff = 1 * this.niveau;
           
 
-            this.add.image(0,0,'base').setOrigin(0,0);
-            this.add.image(0,0,'entier').setOrigin(0,0);
+            this.fond = this.add.image(0,0,'entier').setOrigin(0,0);
 
-            this.bandeau_f = this.add.image((650 + this.diff),198,'bandeau_f').setOrigin(0,0);
-            this.bandeau_o = this.add.image((650 + this.diff),198,'bandeau_o').setOrigin(0,0).setAlpha(0);
                         
-            this.coureur = this.add.image(30,150,'coureur').setOrigin(0,0);
-            this.remplace = this.add.image(0,0,'base').setOrigin(0,0).setAlpha(1);
+            this.viseur = this.physics.add.image(374,188,'viseur');
+            this.viseur.setCollideWorldBounds(true);
 
-            this.zoneTap = this.add.image(80,315,'bouton').setInteractive().setScrollFactor(0, 0);
+            this.centre = this.physics.add.image(this.viseur.x,this.viseur.y,'centre');
+            this.centre.setCollideWorldBounds(true);
+
+            this.zoneTap = this.add.image(668,315,'bouton').setInteractive();
+            this.croix = this.add.image(80,315,'fleches').setInteractive();
+            this.flecheH = this.add.image(80,289,'flecheH').setInteractive();
+            this.flecheB = this.add.image(80,341,'flecheB').setInteractive();
+            this.flecheG = this.add.image(54,315,'flecheG').setInteractive();
+            this.flecheD = this.add.image(106,315,'flecheD').setInteractive();
+
+            //this.camera2.setAlpha(0.1).setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.zoneTap,this.croix).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
 
 
-            this.cameras.main.startFollow(this.coureur);
-            this.cameras.main.setBounds(0, 0, 2244, 600);
+
+            this.camera1.setAlpha(1).startFollow(this.viseur).setBounds(0, 0, 748, 376).ignore(this.zoneTap,this.croix).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
             
+            this.camera2.setAlpha(1).setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.centre).ignore(this.viseur).ignore(this.fond);
+
+            this.camera3.setAlpha(0.1).setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.zoneTap,this.croix).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
+
+
             this.zoneTap.on('pointerdown',() => {
-              this.remplace.setAlpha(0);
-              this.coureur.x += 20;
               console.log("hello");
             })
-            
+
+
+            this.flecheH.on('pointerdown',() => {
+              this.viseur.setVelocityY(-200); 
+              this.centre.setVelocityY(-200); 
+              console.log("hello");
+            })
+            this.flecheH.on('pointerup',() => {
+              this.viseur.setVelocityY(0); 
+              this.centre.setVelocityY(0); 
+              console.log("hello");
+            })
+
+
+            this.flecheB.on('pointerdown',() => {
+              this.viseur.setVelocityY(200);
+              this.centre.setVelocityY(200);
+              console.log("hello");
+            })
+            this.flecheB.on('pointerup',() => {
+              this.viseur.setVelocityY(0);
+              this.centre.setVelocityY(0);
+              console.log("hello");
+            })
+
+
+            this.flecheG.on('pointerdown',() => {
+              this.viseur.setVelocityX(-200);
+              this.centre.setVelocityX(-200);
+              console.log("hello");
+            })
+            this.flecheG.on('pointerup',() => {
+              this.viseur.setVelocityX(0);
+              this.centre.setVelocityX(0);
+              console.log("hello");
+            })
+
+
+            this.flecheD.on('pointerdown',() => {
+              this.viseur.setVelocityX(200);
+              this.centre.setVelocityX(200);
+              console.log("hello");
+            })
+            this.flecheD.on('pointerup',() => {
+              this.viseur.setVelocityX(0);
+              this.centre.setVelocityX(0);
+              console.log("hello");
+            })
 
             
 
@@ -52,9 +116,9 @@ class Scene2 extends Phaser.Scene {
             let gameOptions = { initialTime: 600 }
             this.timeLeft = gameOptions.initialTime;
 
-            let timecontainer = this.add.sprite(-50, -50, "timecontainer").setOrigin(0,0).setScrollFactor(0, 0);
-            let timebar = this.add.sprite(0, 0, "timebar").setOrigin(0,0).setScrollFactor(0, 0);
-            this.energyMask = this.add.sprite(timebar.x, timebar.y, "timebar").setOrigin(0,0).setScrollFactor(0, 0);
+            let timecontainer = this.add.sprite(-50, -50, "timecontainer").setOrigin(0,0);
+            let timebar = this.add.sprite(0, 0, "timebar").setOrigin(0,0);
+            this.energyMask = this.add.sprite(timebar.x, timebar.y, "timebar").setOrigin(0,0);
 
             this.energyMask.visible = false;
 
@@ -88,9 +152,7 @@ class Scene2 extends Phaser.Scene {
             });
     }
   update() {
-    if (this.coureur.x >= (631 + this.diff)){
-      this.zoneTap.destroy(true,true);
-      this.bandeau_o.setAlpha(1);
+    if (this.viseur.x >= (631 + this.diff)){
       this.gameTimer.paused = true;
     }
     
