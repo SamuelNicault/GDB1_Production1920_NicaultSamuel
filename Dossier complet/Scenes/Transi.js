@@ -1,4 +1,4 @@
-class Scene4 extends Phaser.Scene {
+class Scene5 extends Phaser.Scene {
     constructor() {
         super("Transi");
     }
@@ -52,15 +52,15 @@ class Scene4 extends Phaser.Scene {
 
 
       function changeLevel1 () {
-        this.scene.start('Titre', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+        this.scene.start('Micro_1', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
       }
 
       function changeLevel2 () {
-        this.scene.start('Suite', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+        this.scene.start('Micro_2', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
       }
 
       function changeLevel3 () {
-        this.scene.start('Escrime', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+        this.scene.start('Micro_3', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
       }
     }
 

@@ -13,6 +13,9 @@ class Scene0 extends Phaser.Scene {
   }
 
   preload() {
+              //Titre
+          this.load.image('boutons', 'assets/boutons_titre.png');
+
               //Jeu 1
           this.load.image("timebar", "assets/timer.png");
           this.load.image("coureur", "assets/coureur.png");
