@@ -11,7 +11,7 @@ var config = {
 		}
 	},
 
-	scene: [Scene2]
+	scene: [Titre, Scene0, Scene1, Scene2, Scene3, Scene4]
 
 };
 

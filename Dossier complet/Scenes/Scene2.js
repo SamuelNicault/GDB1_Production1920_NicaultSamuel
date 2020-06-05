@@ -4,32 +4,34 @@ class Scene2 extends Phaser.Scene {
     }
 
 
-  init(){
-    this.camera3 = this.cameras.add(0, 0, 748, 376);
-    this.camera2 = this.cameras.add(0, 0, 748, 376);
-    this.camera1 = this.cameras.add(285, 100, 177, 177);
-
-    this.quete;
-    this.press;
-    this.niveau = 6;
-    this.cible;
+  init(data){
+    this.niveau = data.niveau;
+    this.score = data.score;
+    this.vie = data.vie;
+    this.or = data.or;
+    this.argent = data.argent;
+    this.bronze = data.bronze;
   }
 
- preload() {
-          this.load.image("cible", "assets/t_cible.png");
-          this.load.image("timebar", "assets/timer.png");
-          this.load.image("viseur", "assets/t_viseur.png");
-          this.load.image("centre", "assets/t_centre_viseur.png");
-          this.load.image("entier", "assets/fin.png");
-          this.load.image("bouton", "assets/t_bouton.png");
-          this.load.image("fleches", "assets/t_fleches.png");
-          this.load.image("flecheH", "assets/t_fleche_h.png");
-          this.load.image("flecheB", "assets/t_fleche_b.png");
-          this.load.image("flecheG", "assets/t_fleche_g.png");
-          this.load.image("flecheD", "assets/t_fleche_d.png");
-    }
+  preload() {
+
+  }
+
 
     create() {
+            this.cible;
+            this.press;
+
+            this.niveau ++;
+
+            this.isWin = 0;
+            this.isLoose = 0;
+
+
+            this.camera3 = this.cameras.add(0, 0, 748, 376);
+            this.camera2 = this.cameras.add(0, 0, 748, 376);
+            this.camera1 = this.cameras.add(285, 100, 177, 177);
+
             this.diff = 400 / (0.5*this.niveau);
             this.Y = Phaser.Math.Between(50,100);
             this.Y1 = Phaser.Math.Between(-10,80);
@@ -43,8 +45,8 @@ class Scene2 extends Phaser.Scene {
             this.centre = this.physics.add.image(this.viseur.x,this.viseur.y,'centre');
             this.centre.setCollideWorldBounds(true);
 
-            this.zoneTap = this.add.image(668,315,'bouton').setInteractive();
-            this.croix = this.add.image(80,315,'fleches').setInteractive();
+            this.zoneTap = this.add.image(668,315,'t_bouton').setInteractive();
+            this.croix =   this.add.image(80,315,'fleches').setInteractive();
             this.flecheH = this.add.image(80,289,'flecheH').setInteractive();
             this.flecheB = this.add.image(80,341,'flecheB').setInteractive();
             this.flecheG = this.add.image(54,315,'flecheG').setInteractive();
@@ -82,7 +84,7 @@ class Scene2 extends Phaser.Scene {
               this.zoneTap.on('pointerdown',() => {
                 cible.disableBody(true,true);
                 if (this.isWin == 1){
-                  this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+                  this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
                 }
               })
             };
@@ -94,7 +96,7 @@ class Scene2 extends Phaser.Scene {
               this.viseur.setVelocityY(-this.diff); 
               this.centre.setVelocityY(-this.diff);
               if (this.isWin == 1){
-              this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+              this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
             } 
             })
             this.flecheH.on('pointerup',() => {
@@ -107,7 +109,7 @@ class Scene2 extends Phaser.Scene {
               this.viseur.setVelocityY(this.diff);
               this.centre.setVelocityY(this.diff);
               if (this.isWin == 1){
-              this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+              this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
             }
             })
             this.flecheB.on('pointerup',() => {
@@ -120,7 +122,7 @@ class Scene2 extends Phaser.Scene {
               this.viseur.setVelocityX(-this.diff);
               this.centre.setVelocityX(-this.diff);
               if (this.isWin == 1){
-              this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+              this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
             }
             })
             this.flecheG.on('pointerup',() => {
@@ -133,7 +135,7 @@ class Scene2 extends Phaser.Scene {
               this.viseur.setVelocityX(this.diff);
               this.centre.setVelocityX(this.diff);
               if (this.isWin == 1){
-              this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+              this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
             }
             })
             this.flecheD.on('pointerup',() => {
@@ -142,7 +144,7 @@ class Scene2 extends Phaser.Scene {
             })
 
             function changeLevel () {
-              console.log("change de level");
+              this.scene.start('Transi', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
             }
             
 
@@ -177,22 +179,37 @@ class Scene2 extends Phaser.Scene {
                     let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
                     this.energyMask.x -= stepWidth;
                     if(this.timeLeft == 0){
+                      this.zoneTap.destroy(true,true);
                       if (this.cibles.countActive(true) === 1){
+                        this.argent ++;
+                        this.score += 100 * this.niveau;
                         this.argentText.visible = true;
-                        this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+                        this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
                       }
                       if (this.cibles.countActive(true) === 2){
+                        this.bronze ++;
+                        this.score += 50 * this.niveau;
                         this.bronzeText.visible = true;
-                        this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+                        this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
                       }
                       if (this.cibles.countActive(true) === 3){
+                        this.vie --;
                         this.perduText.visible = true;
-                        this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+                        this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
                       }
                       if (this.cibles.countActive(true) === 4){
+                        this.vie --;
                         this.perduText.visible = true;
-                        this.timedEvent = this.time.delayedCall(4000, changeLevel, [], this);
+                        this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
                       }
+                    }
+                    if (this.cibles.countActive(true) === 0 & this.timeLeft > 0){
+                      this.or ++;
+                      this.isWin = 1;  
+                      this.score += 200 * this.niveau;
+                      this.gameTimer.paused = true;
+                      this.victoireText.visible = true;
+                      this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
                     }
                 },
                 callbackScope: this,
@@ -201,13 +218,11 @@ class Scene2 extends Phaser.Scene {
 
     }
   update() {
-    if (this.cibles.countActive(true) === 0){
-      this.gameTimer.paused = true;
-      this.victoireText.visible = true;
-      this.isWin = 1;
-      console.log(this.isWin);
-    }
-    
+      if (this.cibles.countActive(true) === 0){
+        this.isWin = 1;  
+        this.gameTimer.paused = true;
+        this.victoireText.visible = true;
+      } 
 
   }
 
