@@ -37,7 +37,7 @@ class Scene3 extends Phaser.Scene {
             this.Y1 = Phaser.Math.Between(-10,80);
             this.X = Phaser.Math.Between(30,60);
 
-            this.fond = this.add.image(0,0,'entier').setOrigin(0,0);
+            this.fond = this.add.image(0,0,'t_entier').setOrigin(0,0);
                         
             this.viseur = this.physics.add.image(374,188,'viseur');
             this.viseur.setCollideWorldBounds(true);
@@ -76,7 +76,7 @@ class Scene3 extends Phaser.Scene {
 
             this.camera1.setAlpha(1).startFollow(this.viseur).setBounds(0, 0, 748, 376).ignore(this.zoneTap).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
             this.camera2.setAlpha(1).setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.centre).ignore(this.cibles).ignore(this.viseur).ignore(this.fond);
-            this.camera3.setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.zoneTap,this.croix).ignore(this.cibles).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
+            this.camera3.setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.zoneTap).ignore(this.cibles).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
 
             this.physics.add.overlap(this.centre, this.cibles, shoot, null,this);
 

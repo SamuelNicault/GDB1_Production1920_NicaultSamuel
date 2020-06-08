@@ -31,7 +31,7 @@ class Scene0 extends Phaser.Scene {
           this.load.image("timebar", "assets/timer.png");
           this.load.image("viseur", "assets/t_viseur.png");
           this.load.image("centre", "assets/t_centre_viseur.png");
-          this.load.image("entier", "assets/fin.png");
+          this.load.image("t_entier", "assets/fin.png");
           this.load.image("t_bouton", "assets/t_bouton.png");
           this.load.image("fleches", "assets/t_fleches.png");
           this.load.image("flecheH", "assets/t_fleche_h.png");

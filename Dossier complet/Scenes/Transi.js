@@ -37,7 +37,7 @@ class Scene5 extends Phaser.Scene {
     this.niveauText = this.add.text(250, 20, "Prochain Niveau: " + (this.niveau + 1), {'font': '23px', fill: '#fff'});
 
     if (this.vie > 0){
-      this.Choix_lvl = Phaser.Math.Between(1, 3);
+      this.Choix_lvl = Phaser.Math.Between(2, 2);
       if(this.Choix_lvl == 1){
         this.timedEvent = this.time.delayedCall(5000, changeLevel1, [], this);
       }
