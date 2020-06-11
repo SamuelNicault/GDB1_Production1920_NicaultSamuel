@@ -32,11 +32,11 @@ Scene5 extends Phaser.Scene {
     this.add.image(425, 300, 'mort');
     this.vie3 = this.add.image(425, 300, 'vie');
 
-    this.nb_orText = this.add.text(90, 216, "OR X" + this.or, {'font': '23px', fill: '#fff'});
-    this.nb_argentText = this.add.text(310, 216, "ARGENT X" + this.argent, {'font': '23px', fill: '#fff'});
-    this.nb_bronzeText = this.add.text(564, 216, "BRONZE X" + this.bronze, {'font': '23px', fill: '#fff'});
-    this.scoreText = this.add.text(310, 40, "Score : " + this.score, {'font': '23px', fill: '#fff'});
-    this.niveauText = this.add.text(250, 20, "Prochain Niveau: " + (this.niveau + 1), {'font': '23px', fill: '#fff'});
+    this.nb_orText = this.add.text(90, 216, "OR X" + this.or, {'font': '23px', fill: '#000'});
+    this.nb_argentText = this.add.text(310, 216, "ARGENT X" + this.argent, {'font': '23px', fill: '#000'});
+    this.nb_bronzeText = this.add.text(564, 216, "BRONZE X" + this.bronze, {'font': '23px', fill: '#000'});
+    this.scoreText = this.add.text(310, 40, "Score : " + this.score, {'font': '23px', fill: '#000'});
+    this.niveauText = this.add.text(250, 20, "Prochain Niveau: " + (this.niveau + 1), {'font': '23px', fill: '#000'});
 
     if (this.vie > 0){
       this.Choix_lvl = Phaser.Math.Between(1, 3);
