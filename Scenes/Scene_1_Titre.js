@@ -6,6 +6,7 @@ class Scene2 extends Phaser.Scene {
 
   init(data){
     this.niveau = data.niveau;
+    this.choix = data.choix;
     this.score = data.score;
     this.vie = data.vie;
     this.or = data.or;
@@ -18,6 +19,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
+            
             this.diff = 100 * this.niveau;
             this.niveau ++;
 
@@ -25,7 +27,8 @@ class Scene2 extends Phaser.Scene {
 
             this.bandeau_f = this.add.image((450 + this.diff),198,'bandeau_f').setOrigin(0,0);
             this.bandeau_o = this.add.image((450 + this.diff),198,'bandeau_o').setOrigin(0,0).setAlpha(0);
-                        
+            
+
             this.coureur = this.add.sprite(30,150,'coureur').setOrigin(0,0);
             this.c_c_1 = this.add.sprite(30,150,'c_coureur').setOrigin(0,0);
             this.c_c_2 = this.add.sprite(30,150,'c_coureur').setOrigin(0,0);
@@ -45,6 +48,27 @@ class Scene2 extends Phaser.Scene {
             });
 
             this.anims.create({
+              key: 'run_j1',
+              frames: this.anims.generateFrameNumbers('coureur1', {start: 0, end: 15}),
+              frameRate: 12,
+              repeat: -1
+            });
+
+            this.anims.create({
+              key: 'run_j2',
+              frames: this.anims.generateFrameNumbers('coureur2', {start: 0, end: 15}),
+              frameRate: 12,
+              repeat: -1
+            });
+
+            this.anims.create({
+              key: 'run_j3',
+              frames: this.anims.generateFrameNumbers('coureur3', {start: 0, end: 15}),
+              frameRate: 12,
+              repeat: -1
+            });
+
+            this.anims.create({
               key: 'run_e',
               frames: this.anims.generateFrameNumbers('c_coureur', {start: 0, end: 15}),
               frameRate: 12,
@@ -56,7 +80,7 @@ class Scene2 extends Phaser.Scene {
             })
 
             function changeLevel () {
-              this.scene.start('Transi', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+              this.scene.start('Transi', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
             }
         this.press;
         this.isWin = 0;
@@ -167,7 +191,22 @@ class Scene2 extends Phaser.Scene {
 
   update() {
     if (this.coureur.x <= (431 + this.diff)){
-      this.coureur.play('run_j', true);
+      if(this.choix == 1){
+        this.coureur.play('run_j', true);
+      }
+
+      if(this.choix == 2){
+        this.coureur.play('run_j1', true);
+      }
+
+      if(this.choix == 3){
+        this.coureur.play('run_j2', true);
+      }
+
+      if(this.choix == 4){
+        this.coureur.play('run_j3', true);        
+      }
+
       this.c_c_1.play('run_e', true);
       this.c_c_2.play('run_e', true);
       this.c_c_3.play('run_e', true);

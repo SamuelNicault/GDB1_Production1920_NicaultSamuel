@@ -7,6 +7,7 @@ class Scene3 extends Phaser.Scene {
   init(data){
     this.niveau = data.niveau;
     this.score = data.score;
+    this.choix = data.choix;
     this.vie = data.vie;
     this.or = data.or;
     this.argent = data.argent;
@@ -144,7 +145,7 @@ class Scene3 extends Phaser.Scene {
             })
 
             function changeLevel () {
-              this.scene.start('Transi', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+              this.scene.start('Transi', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
             }
             
 

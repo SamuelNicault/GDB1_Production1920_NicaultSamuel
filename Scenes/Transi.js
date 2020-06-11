@@ -7,6 +7,7 @@ Scene5 extends Phaser.Scene {
   init(data){
     this.niveau = data.niveau;
     this.score = data.score;
+    this.choix = data.choix;
     this.vie = data.vie;
     this.or = data.or;
     this.argent = data.argent;
@@ -54,15 +55,15 @@ Scene5 extends Phaser.Scene {
 
 
       function changeLevel1 () {
-        this.scene.start('Micro_1', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+        this.scene.start('Micro_1', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
       }
 
       function changeLevel2 () {
-        this.scene.start('Micro_2', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+        this.scene.start('Micro_2', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
       }
 
       function changeLevel3 () {
-        this.scene.start('Micro_3', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+        this.scene.start('Micro_3', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
       }
     }
 
@@ -71,7 +72,7 @@ Scene5 extends Phaser.Scene {
     }
 
     function changeLevelFin () {
-      this.scene.start('Titre', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+      this.scene.start('Titre', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
     }
 
   }

@@ -6,6 +6,7 @@ class Scene6 extends Phaser.Scene {
   init(data){
     this.niveau = data.niveau;
     this.score = data.score;
+    this.choix = data.choix;
     this.vie = data.vie;
     this.or = data.or;
     this.argent = data.argent;
@@ -32,7 +33,7 @@ class Scene6 extends Phaser.Scene {
     this.add.image(610, 300, 'boutons').setScale(0.75);
 
     
-    this.bouton1 = this.add.image(25, 25, 'retour').setInteractive();
+    this.bouton1 = this.add.image(35, 31, 'Change').setInteractive();
 
     this.bouton1.on('pointerdown',() => {
       this.timedEvent = this.time.delayedCall(0, changeLevel, [], this);
@@ -70,7 +71,7 @@ class Scene6 extends Phaser.Scene {
     }
 
     if(this.bronze >= 3){
-      this.TroisBchaqText.setVisible(true);
+      this.TroisBText.setVisible(true);
     }
 
     if(this.bronze > 6){
@@ -94,10 +95,7 @@ class Scene6 extends Phaser.Scene {
     }
 
     function changeLevel () {
-      this.scene.start('Titre', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
-       console.log(this.niveau);
-        console.log(this.vie);
-         console.log(this.score);
+      this.scene.start('Titre', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
     }
 
   }

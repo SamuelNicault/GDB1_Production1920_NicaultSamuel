@@ -7,6 +7,7 @@ class Scene4 extends Phaser.Scene {
   init(data){
     this.niveau = data.niveau;
     this.score = data.score;
+    this.choix = data.choix;
     this.vie = data.vie;
     this.or = data.or;
     this.argent = data.argent;
@@ -40,7 +41,7 @@ class Scene4 extends Phaser.Scene {
             this.zoneVic1 = this.physics.add.image(410, 212, "").setScale(1, 1).setAlpha(0).setAngle(45);
             this.zoneVic2 = this.physics.add.image(404, 234, "").setScale(1, 0.5).setAlpha(0).setAngle(45);
 
-                        
+            if (this.choix == 1){            
             this.perso_top = this.add.image(260,205,'perso_top').setAlpha(0);
             this.perso_mid = this.add.image(260,205,'perso_mid').setAlpha(1);
             this.perso_bot = this.add.image(260,205,'perso_bot').setAlpha(0);
@@ -48,6 +49,38 @@ class Scene4 extends Phaser.Scene {
             this.perso_a_top = this.add.image(270,195,'perso_a_top').setAlpha(0);
             this.perso_a_mid = this.add.image(270,195,'perso_a_mid').setAlpha(0);
             this.perso_a_bot = this.add.image(270,195,'perso_a_bot').setAlpha(0);
+            }
+
+            if (this.choix == 2){            
+            this.perso_top = this.add.image(260,205,'perso_top1').setAlpha(0);
+            this.perso_mid = this.add.image(260,205,'perso_mid1').setAlpha(1);
+            this.perso_bot = this.add.image(260,205,'perso_bot1').setAlpha(0);
+
+            this.perso_a_top = this.add.image(270,195,'perso_a_top1').setAlpha(0);
+            this.perso_a_mid = this.add.image(270,195,'perso_a_mid1').setAlpha(0);
+            this.perso_a_bot = this.add.image(270,195,'perso_a_bot1').setAlpha(0);
+            }
+
+            if (this.choix == 3){            
+            this.perso_top = this.add.image(260,205,'perso_top2').setAlpha(0);
+            this.perso_mid = this.add.image(260,205,'perso_mid2').setAlpha(1);
+            this.perso_bot = this.add.image(260,205,'perso_bot2').setAlpha(0);
+
+            this.perso_a_top = this.add.image(270,195,'perso_a_top2').setAlpha(0);
+            this.perso_a_mid = this.add.image(270,195,'perso_a_mid2').setAlpha(0);
+            this.perso_a_bot = this.add.image(270,195,'perso_a_bot2').setAlpha(0);
+            }
+
+            if (this.choix == 4){            
+            this.perso_top = this.add.image(260,205,'perso_top3').setAlpha(0);
+            this.perso_mid = this.add.image(260,205,'perso_mid3').setAlpha(1);
+            this.perso_bot = this.add.image(260,205,'perso_bot3').setAlpha(0);
+
+            this.perso_a_top = this.add.image(270,195,'perso_a_top3').setAlpha(0);
+            this.perso_a_mid = this.add.image(270,195,'perso_a_mid3').setAlpha(0);
+            this.perso_a_bot = this.add.image(270,195,'perso_a_bot3').setAlpha(0);
+            }
+
             this.fleuret = this.physics.add.image(346,184,'fleuret');
             
 
@@ -144,7 +177,7 @@ class Scene4 extends Phaser.Scene {
               })
             
             function changeLevel () {
-              this.scene.start('Transi', {or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
+              this.scene.start('Transi', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
             }
 
             this.physics.add.overlap(this.fleuret, this.c_fleuret, etincelles, null,this);
@@ -227,12 +260,24 @@ class Scene4 extends Phaser.Scene {
                     this.timeLeft --;
                     let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
                     this.energyMask.x -= stepWidth;
+                    if(this.timeLeft == 0){
+                      this.zoneTap.destroy(true,true);
+                      this.perduText.visible = true;
+                      this.gameTimer.paused = true;
+                      this.isLoose = 1;
+                    if (this.isLoose == 1){
+                      this.vie --;
+                      this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
+                    }
+                  }
                 },
                 callbackScope: this,
                 loop: true
+
             });
 
             function play_c(){
+              
               if(this.timeLeft > 0){
                  if(this.isWin == 0){
                   this.posC = Phaser.Math.Between(1, 3);
