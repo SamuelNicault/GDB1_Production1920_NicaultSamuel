@@ -36,20 +36,27 @@ Scene5 extends Phaser.Scene {
     this.nb_argentText = this.add.text(310, 216, "ARGENT X" + this.argent, {'font': '23px', fill: '#000'});
     this.nb_bronzeText = this.add.text(564, 216, "BRONZE X" + this.bronze, {'font': '23px', fill: '#000'});
     this.scoreText = this.add.text(310, 40, "Score : " + this.score, {'font': '23px', fill: '#000'});
-    this.niveauText = this.add.text(250, 20, "Prochain Niveau: " + (this.niveau + 1), {'font': '23px', fill: '#000'});
+    this.niveauText = this.add.text(200, 20, "Prochain Niveau: " + (this.niveau + 1), {'font': '23px', fill: '#000'});
+    
+    this.level1Text = this.add.text(500, 20, "Course", {'font': '23px', fill: '#000'}).setVisible(false);
+    this.level2Text = this.add.text(500, 20, "Tir", {'font': '23px', fill: '#000'}).setVisible(false);
+    this.level3Text = this.add.text(500, 20, "Escrime", {'font': '23px', fill: '#000'}).setVisible(false);
 
     if (this.vie > 0){
       this.Choix_lvl = Phaser.Math.Between(1, 3);
 
       if(this.Choix_lvl == 1){
+        this.level1Text.setVisible(true); 
         this.timedEvent = this.time.delayedCall(5000, changeLevel1, [], this);
       }
 
       if(this.Choix_lvl == 2){
+        this.level2Text.setVisible(true);
         this.timedEvent = this.time.delayedCall(5000, changeLevel2, [], this);
       }  
 
       if(this.Choix_lvl == 3){
+        this.level3Text.setVisible(true);
         this.timedEvent = this.time.delayedCall(5000, changeLevel3, [], this);
       }
 
