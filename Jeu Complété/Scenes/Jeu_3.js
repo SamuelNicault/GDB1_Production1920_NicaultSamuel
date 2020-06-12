@@ -22,6 +22,11 @@ class Scene4 extends Phaser.Scene {
             this.press;
             this.isWin = 0;
             this.isLoose = 0;
+            this.changerH = 1;
+            this.changerB = 1;
+
+            this.cursors = this.input.keyboard.createCursorKeys();
+
 
             this.niveau ++;
 
@@ -316,6 +321,57 @@ class Scene4 extends Phaser.Scene {
 
     }
   update() {
+
+    if(this.cursors.up.isDown & this.changerH == 1){
+      this.changerH = 0;
+      if(this.posmid == 1){
+        this.postop = 1;
+        this.posmid = 0;
+        this.perso_top.setAlpha(1);
+        this.perso_mid.setAlpha(0);
+
+        this.fleuret.x = 346;
+        this.fleuret.y = 172;
+      }
+
+      if(this.posbot == 1){
+        this.posmid = 1;
+        this.posbot = 0;
+        this.perso_mid.setAlpha(1);
+        this.perso_bot.setAlpha(0);
+
+        this.fleuret.x = 346;
+        this.fleuret.y = 184;
+      }
+    }
+    if(this.cursors.up.isUp){
+      this.changerH = 1;
+    }
+      
+    if(this.cursors.down.isDown & this.changerB == 1){
+      this.changerB = 0;
+      if(this.posmid == 1){
+        this.posbot = 1;
+        this.posmid = 0;
+        this.perso_bot.setAlpha(1);
+        this.perso_mid.setAlpha(0);
+        this.fleuret.x = 340;
+        this.fleuret.y = 200;
+      }
+
+      if(this.postop == 1){
+        this.posmid = 1;
+        this.postop = 0;
+        this.perso_mid.setAlpha(1);
+        this.perso_top.setAlpha(0);
+        this.fleuret.x = 346;
+        this.fleuret.y = 184;
+      }
+    }
+
+    if(this.cursors.down.isUp){
+      this.changerB = 1;
+    }
 
   }
 

@@ -23,6 +23,8 @@ class Scene3 extends Phaser.Scene {
             this.cible;
             this.press;
 
+            this.cursors = this.input.keyboard.createCursorKeys();
+
             this.niveau ++;
 
             this.isWin = 0;
@@ -224,6 +226,34 @@ class Scene3 extends Phaser.Scene {
         this.gameTimer.paused = true;
         this.victoireText.visible = true;
       } 
+
+      if(this.cursors.up.isDown){
+        this.viseur.setVelocityY(-this.diff); 
+        this.centre.setVelocityY(-this.diff);
+      }
+      
+      else if(this.cursors.down.isDown){
+        this.viseur.setVelocityY(this.diff); 
+        this.centre.setVelocityY(this.diff);
+      }
+
+      else if(this.cursors.left.isDown){
+        this.viseur.setVelocityX(-this.diff); 
+        this.centre.setVelocityX(-this.diff);
+      }
+
+      else if(this.cursors.right.isDown){
+        this.viseur.setVelocityX(this.diff); 
+        this.centre.setVelocityX(this.diff);
+      }
+
+      else{
+        this.viseur.setVelocityY(0); 
+        this.centre.setVelocityY(0);
+
+        this.viseur.setVelocityX(0); 
+        this.centre.setVelocityX(0);
+      }
 
   }
 
