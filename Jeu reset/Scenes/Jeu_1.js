@@ -23,23 +23,27 @@ class Scene2 extends Phaser.Scene {
             this.diff = 100 * this.niveau;
             this.niveau ++;
 
+
+        //Fond
             this.add.image(0,0,'entier').setOrigin(0,0);
 
             this.bandeau_f = this.add.image((450 + this.diff),198,'bandeau_f').setOrigin(0,0);
             this.bandeau_o = this.add.image((450 + this.diff),198,'bandeau_o').setOrigin(0,0).setAlpha(0);
             
-
+        //Personnages
             this.coureur = this.add.sprite(30,150,'coureur').setOrigin(0,0);
             this.c_c_1 = this.add.sprite(30,150,'c_coureur').setOrigin(0,0);
             this.c_c_2 = this.add.sprite(30,150,'c_coureur').setOrigin(0,0);
             this.c_c_3 = this.add.sprite(30,150,'c_coureur').setOrigin(0,0);
 
+        //Zone Interactive
             this.zoneTap = this.add.image(80,315,'c_bouton').setInteractive().setScrollFactor(0, 0);
 
-
+        //Camera
             this.cameras.main.startFollow(this.coureur);
             this.cameras.main.setBounds(0, 0, 2244, 600);
 
+        //Animations
             this.anims.create({
               key: 'run_j',
               frames: this.anims.generateFrameNumbers('coureur', {start: 0, end: 15}),
@@ -75,16 +79,20 @@ class Scene2 extends Phaser.Scene {
               repeat: -1
             });
             
+        //Interaction de la zone
             this.zoneTap.on('pointerdown',() => {
               this.coureur.x += 20;
             })
 
+        //Fonction Changement de level
             function changeLevel () {
               this.scene.start('Transi', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
             }
-        this.press;
-        this.isWin = 0;
-        this.isLoose = 0;
+            
+        //Variables pour conditions victoire
+            this.press;
+            this.isWin = 0;
+            this.isLoose = 0;
 
 
         //Timer
@@ -117,6 +125,7 @@ class Scene2 extends Phaser.Scene {
                     this.timeLeft --;
                     let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
                     this.energyMask.x -= stepWidth;
+                //Conditions gain
                     if (this.coureur.x >= (431 + this.diff)){
                       if(this.isLoose == 0){
                         this.gameTimer.paused = true;
@@ -142,7 +151,7 @@ class Scene2 extends Phaser.Scene {
                       this.bandeau_o.setAlpha(1);
                     }
                     if(this.timeLeft == 0){
-                      
+                      //Défaite si arrive à 0
                         this.zoneTap.destroy(true,true);
                         this.perduText.visible = true;
                         this.gameTimer.paused = true;
@@ -151,13 +160,12 @@ class Scene2 extends Phaser.Scene {
                           this.vie --;
                           this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
                         }
-                      //this.scene.start("PlayGame");
                     }
                 },
                 callbackScope: this,
                 loop: true
             });
-
+        //Affichage interactif des victoires
             if (this.isWin == 1){
                   this.timedEvent = this.time.delayedCall(2000, changeLevel, [], this);
             }
@@ -175,6 +183,7 @@ class Scene2 extends Phaser.Scene {
 
         this.timedEvent = this.time.addEvent({delay: 100, callback: c_course, callbackScope: this, loop: true});
 
+    //Mouvement des joueurs ennemis
         function c_course(){
           if(this.timeLeft > 0){
             if(this.isWin == 0){
@@ -190,6 +199,7 @@ class Scene2 extends Phaser.Scene {
     }
 
   update() {
+    //Détection de victoire et update des animations
     if (this.coureur.x <= (431 + this.diff)){
       if(this.choix == 1){
         this.coureur.play('run_j', true);

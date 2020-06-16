@@ -30,24 +30,28 @@ class Scene3 extends Phaser.Scene {
             this.isWin = 0;
             this.isLoose = 0;
 
+        //Cameras
+            this.camera3 = this.cameras.add(0, 0, 748, 376); //Affiche les curseurs
+            this.camera2 = this.cameras.add(0, 0, 748, 376);//Cache le fond
+            this.camera1 = this.cameras.add(285, 100, 177, 177); //Camera centrale suit le joueur
 
-            this.camera3 = this.cameras.add(0, 0, 748, 376);
-            this.camera2 = this.cameras.add(0, 0, 748, 376);
-            this.camera1 = this.cameras.add(285, 100, 177, 177);
-
+        //Difficulté
             this.diff = 400 / (0.5*this.niveau);
             this.Y = Phaser.Math.Between(50,100);
             this.Y1 = Phaser.Math.Between(-10,80);
             this.X = Phaser.Math.Between(30,60);
 
+        //Monde
             this.fond = this.add.image(0,0,'t_entier').setOrigin(0,0);
-                        
+        
+        //Personnage              
             this.viseur = this.physics.add.image(374,188,'viseur');
             this.viseur.setCollideWorldBounds(true);
 
             this.centre = this.physics.add.image(this.viseur.x,this.viseur.y,'centre');
             this.centre.setCollideWorldBounds(true).setAlpha(0);
 
+        //Zones interactives
             this.zoneTap = this.add.image(668,315,'t_bouton').setInteractive();
             this.croix =   this.add.image(80,315,'fleches').setInteractive();
             this.flecheH = this.add.image(80,289,'flecheH').setInteractive();
@@ -55,7 +59,7 @@ class Scene3 extends Phaser.Scene {
             this.flecheG = this.add.image(54,315,'flecheG').setInteractive();
             this.flecheD = this.add.image(106,315,'flecheD').setInteractive();
 
-
+        //Cibles
             this.cibles = this.physics.add.group({
               key: 'cible',
               repeat: 3,
@@ -65,6 +69,7 @@ class Scene3 extends Phaser.Scene {
               cible.setGravityY(0);
             });
 
+        //Textes interactifs
             this.victoireText = this.add.text(284, 20, "MEDAILLE D'OR", {'font': '23px', fill: '#fff'});
             this.victoireText.visible = false;
 
@@ -77,12 +82,14 @@ class Scene3 extends Phaser.Scene {
             this.perduText = this.add.text(324, 20, "HONTEUX", {'font': '23px', fill: '#fff'});
             this.perduText.visible = false;
 
+        //Etalonnage des cameras 
             this.camera1.startFollow(this.viseur).setBounds(0, 0, 748, 376).ignore(this.zoneTap).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
             this.camera2.setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.centre).ignore(this.cibles).ignore(this.viseur).ignore(this.fond);
             this.camera3.setBounds(0, 0, 748, 376).setBackgroundColor(0x000).ignore(this.zoneTap).ignore(this.cibles).ignore(this.croix).ignore(this.flecheH).ignore(this.flecheB).ignore(this.flecheG).ignore(this.flecheD);
 
             this.physics.add.overlap(this.centre, this.cibles, shoot, null,this);
 
+          //Interaction des zones interactives
             function shoot(centre, cible){
               this.zoneTap.on('pointerdown',() => {
                 cible.disableBody(true,true);
@@ -146,6 +153,7 @@ class Scene3 extends Phaser.Scene {
               this.centre.setVelocityX(0);
             })
 
+        //Changement de niveau
             function changeLevel () {
               this.scene.start('Transi', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
             }
@@ -182,6 +190,8 @@ class Scene3 extends Phaser.Scene {
                     let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
                     this.energyMask.x -= stepWidth;
                     if(this.timeLeft == 0){
+
+                    //Conditions victoire et défaite
                       this.zoneTap.destroy(true,true);
                       if (this.cibles.countActive(true) === 1){
                         this.argent ++;
@@ -221,12 +231,14 @@ class Scene3 extends Phaser.Scene {
 
     }
   update() {
+    //Détection de victoire
       if (this.cibles.countActive(true) === 0){
         this.isWin = 1;  
         this.gameTimer.paused = true;
         this.victoireText.visible = true;
-      } 
+      }
 
+    //Déplacement du viseur
       if(this.cursors.up.isDown){
         this.viseur.setVelocityY(-this.diff); 
         this.centre.setVelocityY(-this.diff);

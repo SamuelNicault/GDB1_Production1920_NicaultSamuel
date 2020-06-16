@@ -34,18 +34,22 @@ class Scene4 extends Phaser.Scene {
             this.posmid = 1;
             this.posbot = 0;
 
+        //Difficulté
             this.diff = 1000 / (0.5*this.niveau);
             this.Y = Phaser.Math.Between(50,100);
             this.Y1 = Phaser.Math.Between(-10,80);
             this.X = Phaser.Math.Between(30,60);
-
+        
+        //Monde
             this.fond = this.add.image(0,0,'e_entier').setOrigin(0,0);
             this.add.image(80,315,'e_fleches').setInteractive();
 
+        //Zonnes de touche
             this.zoneVic = this.physics.add.image(414, 208, "").setScale(1, 2).setAlpha(0).setAngle(45);
             this.zoneVic1 = this.physics.add.image(410, 212, "").setScale(1, 1).setAlpha(0).setAngle(45);
             this.zoneVic2 = this.physics.add.image(404, 234, "").setScale(1, 0.5).setAlpha(0).setAngle(45);
 
+        //Choix couleur du personnage
             if (this.choix == 1){            
             this.perso_top = this.add.image(260,205,'perso_top').setAlpha(0);
             this.perso_mid = this.add.image(260,205,'perso_mid').setAlpha(1);
@@ -88,7 +92,7 @@ class Scene4 extends Phaser.Scene {
 
             this.fleuret = this.physics.add.image(346,184,'fleuret');
             
-
+        //Ennemis
             this.c_top = this.add.image(490,205,'c_top').setAlpha(0);
             this.c_mid = this.add.image(490,205,'c_mid').setAlpha(1);
             this.c_bot = this.add.image(490,205,'c_bot').setAlpha(0);
@@ -96,12 +100,12 @@ class Scene4 extends Phaser.Scene {
             this.c_fleuret = this.physics.add.image(418,208,'c_fleuret').setAlpha(0); //midC
             this.i_fleuret = this.add.image(418,184,'c_fleuret').setAlpha(1); //midC
 
-
+        //Zones interactives
             this.zoneTap = this.add.image(668,315,'e_bouton').setInteractive();
             this.flecheH = this.add.image(80,296,'e_flecheH').setInteractive();
             this.flecheB = this.add.image(80,334,'e_flecheB').setInteractive();
             
-
+        //Texte interactif
             this.victoireText = this.add.text(284, 176, "MEDAILLE D'OR", {'font': '23px', fill: '#fff'});
             this.victoireText.visible = false;
 
@@ -114,7 +118,7 @@ class Scene4 extends Phaser.Scene {
             this.perduText = this.add.text(324, 176, "HONTEUX", {'font': '23px', fill: '#fff'});
             this.perduText.visible = false;
 
-
+        //Interaction des zones interactives
             this.flecheH.on('pointerdown',() => {
               if(this.posmid == 1){
                 this.postop = 1;
@@ -155,7 +159,7 @@ class Scene4 extends Phaser.Scene {
                 this.fleuret.y = 184;
               }
             })
-            
+
             this.zoneTap.on('pointerdown',() => {
                 this.flecheH.destroy(true,true);
                 this.flecheB.destroy(true,true);
@@ -180,13 +184,15 @@ class Scene4 extends Phaser.Scene {
                   this.fleuret.y = 228;
                 }
               })
-            
+
+         //Changement de levels   
             function changeLevel () {
               this.scene.start('Transi', {choix: this.choix, or: this.or, argent: this.argent, bronze: this.bronze, niveau: this.niveau, vie: this.vie, score: this.score});
             }
 
             this.physics.add.overlap(this.fleuret, this.c_fleuret, etincelles, null,this);
 
+        //Fonction touche des épées
             function etincelles(fleuret, c_fleuret){
               if(this.isWin == 0){
                 this.fleuret.disableBody(true,true);
@@ -200,10 +206,12 @@ class Scene4 extends Phaser.Scene {
               }
             };
 
+        //Overlap des zones
             this.physics.add.overlap(this.fleuret, this.zoneVic, touche, null,this);
             this.physics.add.overlap(this.fleuret, this.zoneVic1, touche, null,this);
             this.physics.add.overlap(this.fleuret, this.zoneVic2, touche, null,this);
 
+        //Conditions de victoire
             function touche(fleuret, ZoneVic){
               this.fleuret.disableBody(true,true);
 
@@ -265,6 +273,7 @@ class Scene4 extends Phaser.Scene {
                     this.timeLeft --;
                     let stepWidth = this.energyMask.displayWidth / gameOptions.initialTime;
                     this.energyMask.x -= stepWidth;
+                  //Défaite
                     if(this.timeLeft == 0){
                       this.zoneTap.destroy(true,true);
                       this.perduText.visible = true;
@@ -280,7 +289,7 @@ class Scene4 extends Phaser.Scene {
                 loop: true
 
             });
-
+        //Mouvement du personnage ennemis
             function play_c(){
               
               if(this.timeLeft > 0){
@@ -321,7 +330,7 @@ class Scene4 extends Phaser.Scene {
 
     }
   update() {
-
+  //Mouvements du joueur
     if(this.cursors.up.isDown & this.changerH == 1){
       this.changerH = 0;
       if(this.posmid == 1){
